@@ -184,7 +184,7 @@ int main(void)
 	  }
 	  // Task 3 ON 0.5 / OFF 1.5 s
 	  if (SW3_Mode == 1)
-	  	  {
+	  {
 		  if (HAL_GetTick() - Timestamp_3 >= ONOFF)
 		  {
 			  Timestamp_3 = HAL_GetTick();
@@ -199,7 +199,7 @@ int main(void)
 				  ONOFF = 1500;
 			  }
 		  }
-	  	  }
+	  }
 
 	  // Task 1 Run LED
 	  if (HAL_GetTick() - Timestamp >= LED1_Half_Preiod)

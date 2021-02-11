@@ -601,7 +601,7 @@ int main(void)
  8000614:	7ebb      	ldrb	r3, [r7, #26]
  8000616:	2b01      	cmp	r3, #1
  8000618:	d11e      	bne.n	8000658 <main+0x180>
-	  	  {
+	  {
 		  if (HAL_GetTick() - Timestamp_3 >= ONOFF)
  800061a:	f000 fadb 	bl	8000bd4 <HAL_GetTick>
  800061e:	4602      	mov	r2, r0
@@ -641,7 +641,7 @@ int main(void)
  8000656:	827b      	strh	r3, [r7, #18]
 			  }
 		  }
-	  	  }
+	  }
 
 	  // Task 1 Run LED
 	  if (HAL_GetTick() - Timestamp >= LED1_Half_Preiod)
