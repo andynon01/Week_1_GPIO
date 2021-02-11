@@ -90,7 +90,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   GPIO_PinState SwitchState[2]; //NOW,LAST
-  uint16_t LED1_Half_Preiod = 500; // 1Hz
+  uint16_t LED1_Half_Preiod = 2000; // 1Hz
   uint32_t Timestamp = 0;
   uint32_t Button_Timestamp = 0;
   /* USER CODE END 2 */
@@ -113,13 +113,21 @@ int main(void)
 		  if (SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET)
 		  {
 				// Change LED1_Frequency
-				if (LED1_Half_Preiod == 500)
+				if (LED1_Half_Preiod == 2000)
 				{
-					LED1_Half_Preiod = 250;
+					LED1_Half_Preiod = 1000;
 				}
-				else
+				else if (LED1_Half_Preiod == 1000)
 				{
 					LED1_Half_Preiod = 500;
+				}
+				else if (LED1_Half_Preiod == 500)
+				{
+					LED1_Half_Preiod = 333;
+				}
+				else if (LED1_Half_Preiod == 333)
+				{
+					LED1_Half_Preiod = 2000;
 				}
 
 		  }
