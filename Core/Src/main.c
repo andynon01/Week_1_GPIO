@@ -93,8 +93,10 @@ int main(void)
   uint16_t LED1_Half_Preiod = 2000; // 1Hz
   uint32_t Timestamp = 0;
   uint32_t Button_Timestamp = 0;
-  uint8_t Switch_3_State[2];
-  uint8_t SW3_Mode = 0;
+  uint8_t Switch_2_State[2];
+  uint8_t LED2 = 0;
+//  uint8_t Switch_3_State[2];
+//  uint8_t SW3_Mode = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -135,6 +137,14 @@ int main(void)
 
 		  }
 		  SwitchState[1] = SwitchState[0];
+
+		  // Task 2
+		  Switch_2_State[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
+		  if (Switch_2_State[1] == GPIO_PIN_SET && Switch_2_State[0] == GPIO_PIN_RESET)
+		  {
+			  LED2 ^= 1;
+		  }
+		  Switch_2_State[1] = Switch_2_State[0];
 	  }
 
 	  // Run LED Task 1
@@ -154,40 +164,42 @@ int main(void)
 
 	  }
 
+	  // Run LED2 Task 2
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, LED2);
 
 	  // Task 3
-	  if (HAL_GetTick() - Button_Timestamp >= 100) // Set Sampling Time
-	  	  {
-	  		  Button_Timestamp = HAL_GetTick();
-	  		  // Switch = HIGH
-	  		  // Switch Push = LOW
-	  		  Switch_3_State[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
-	  		  if (Switch_3_State[1] == GPIO_PIN_SET && Switch_3_State[0] == GPIO_PIN_RESET)
-	  		  {
-	  				if (SW2_Mode = 0)
-	  				{
-
-	  				}
-	  		  }
-	  		  Switch_3_State[1] = Switch_3_State[0];
-	  	  }
-
-	  // Run LED Task 3
-	  if (HAL_GetTick() - Timestamp >= LED1_Half_Preiod)
-	  	  {
-	  		  Timestamp = HAL_GetTick();
-
-	  		  // Toggle LED
-	  		  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET)
-	  		  {
-	  			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-	  		  }
-	  		  else
-	  		  {
-	  			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
-	  		  }
-
-	  	  }
+//	  if (HAL_GetTick() - Button_Timestamp >= 100) // Set Sampling Time
+//	  	  {
+//	  		  Button_Timestamp = HAL_GetTick();
+//	  		  // Switch = HIGH
+//	  		  // Switch Push = LOW
+//	  		  Switch_3_State[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+//	  		  if (Switch_3_State[1] == GPIO_PIN_SET && Switch_3_State[0] == GPIO_PIN_RESET)
+//	  		  {
+//	  				if (SW2_Mode = 0)
+//	  				{
+//
+//	  				}
+//	  		  }
+//	  		  Switch_3_State[1] = Switch_3_State[0];
+//	  	  }
+//
+//	  // Run LED Task 3
+//	  if (HAL_GetTick() - Timestamp >= LED1_Half_Preiod)
+//	  	  {
+//	  		  Timestamp = HAL_GetTick();
+//
+//	  		  // Toggle LED
+//	  		  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET)
+//	  		  {
+//	  			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+//	  		  }
+//	  		  else
+//	  		  {
+//	  			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+//	  		  }
+//
+//	  	  }
   }
   /* USER CODE END 3 */
 }
