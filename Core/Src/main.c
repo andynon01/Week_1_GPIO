@@ -102,6 +102,8 @@ int main(void)
   uint8_t SW3_Mode = 0;
   uint8_t LED3 = 0;
   uint32_t Timestamp_3 = 0;
+  uint16_t ONOFF = 1500;
+  uint8_t Change = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -162,11 +164,42 @@ int main(void)
 	  }
 
 	  // Task 3 Time Control
-	  if (HAL_GetTick() - Timestamp_3 >= 1500)
-	 	  {
-	 		  Timestamp_3 = HAL_GetTick();
-	 	  }
-
+	  // Task 3 ON 1.5 / OFF 0.5 s
+	  if (SW3_Mode == 0)
+	  {
+		  if (HAL_GetTick() - Timestamp_3 >= ONOFF)
+		  {
+			  Timestamp_3 = HAL_GetTick();
+			  LED3 ^= 1;
+			  Change ^= 1;
+			  if (Change == 0)
+			  {
+				  ONOFF = 1500;
+			  }
+			  if (Change == 1)
+			  {
+				  ONOFF = 500;
+			  }
+		  }
+	  }
+	  // Task 3 ON 0.5 / OFF 1.5 s
+	  if (SW3_Mode == 1)
+	  	  {
+		  if (HAL_GetTick() - Timestamp_3 >= ONOFF)
+		  {
+			  Timestamp_3 = HAL_GetTick();
+			  LED3 ^= 1;
+			  Change ^= 1;
+			  if (Change == 0)
+			  {
+				  ONOFF = 500;
+			  }
+			  if (Change == 1)
+			  {
+				  ONOFF = 1500;
+			  }
+		  }
+	  	  }
 
 	  // Task 1 Run LED
 	  if (HAL_GetTick() - Timestamp >= LED1_Half_Preiod)
@@ -182,7 +215,6 @@ int main(void)
 		  {
 			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
 		  }
-
 	  }
 
 	  // Task 2 Run LED2
