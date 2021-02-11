@@ -93,6 +93,8 @@ int main(void)
   uint16_t LED1_Half_Preiod = 2000; // 1Hz
   uint32_t Timestamp = 0;
   uint32_t Button_Timestamp = 0;
+  uint8_t Switch_3_State[2];
+  uint8_t SW3_Mode = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,6 +105,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
+	  // Task 1
 	  // Switch_Button
 	  if (HAL_GetTick() - Button_Timestamp >= 100) // Set Sampling Time
 	  {
@@ -134,7 +137,7 @@ int main(void)
 		  SwitchState[1] = SwitchState[0];
 	  }
 
-	  // Run LED
+	  // Run LED Task 1
 	  if (HAL_GetTick() - Timestamp >= LED1_Half_Preiod)
 	  {
 		  Timestamp = HAL_GetTick();
@@ -150,6 +153,41 @@ int main(void)
 		  }
 
 	  }
+
+
+	  // Task 3
+	  if (HAL_GetTick() - Button_Timestamp >= 100) // Set Sampling Time
+	  	  {
+	  		  Button_Timestamp = HAL_GetTick();
+	  		  // Switch = HIGH
+	  		  // Switch Push = LOW
+	  		  Switch_3_State[0] = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+	  		  if (Switch_3_State[1] == GPIO_PIN_SET && Switch_3_State[0] == GPIO_PIN_RESET)
+	  		  {
+	  				if (SW2_Mode = 0)
+	  				{
+
+	  				}
+	  		  }
+	  		  Switch_3_State[1] = Switch_3_State[0];
+	  	  }
+
+	  // Run LED Task 3
+	  if (HAL_GetTick() - Timestamp >= LED1_Half_Preiod)
+	  	  {
+	  		  Timestamp = HAL_GetTick();
+
+	  		  // Toggle LED
+	  		  if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6) == GPIO_PIN_SET)
+	  		  {
+	  			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+	  		  }
+	  		  else
+	  		  {
+	  			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+	  		  }
+
+	  	  }
   }
   /* USER CODE END 3 */
 }
@@ -249,6 +287,12 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LD2_Pin|GPIO_PIN_9, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -262,11 +306,31 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PC7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PA10 */
   GPIO_InitStruct.Pin = GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB3 PB5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
