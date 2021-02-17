@@ -89,10 +89,11 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+
   uint32_t Button_Timestamp = 0;
 
   GPIO_PinState SwitchState[2]; //NOW,LAST
-  uint16_t LED1_Half_Preiod = 2000; // 1Hz
+  uint16_t LED1_Half_Preiod = 1000; // 1Hz
   uint32_t Timestamp = 0;
 
   uint8_t Switch_2_State[2];
@@ -114,8 +115,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  // Task 1
-	  // Switch_Button
 	  if (HAL_GetTick() - Button_Timestamp >= 100) // Set Sampling Time
 	  {
 		  Button_Timestamp = HAL_GetTick();
@@ -127,21 +126,21 @@ int main(void)
 		  if (SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET)
 		  {
 				// Change LED1_Frequency
-				if (LED1_Half_Preiod == 2000)
-				{
-					LED1_Half_Preiod = 1000;
-				}
-				else if (LED1_Half_Preiod == 1000)
+				if (LED1_Half_Preiod == 1000) // 0.5 Hz
 				{
 					LED1_Half_Preiod = 500;
 				}
-				else if (LED1_Half_Preiod == 500)
+				else if (LED1_Half_Preiod == 500) // 1 Hz
 				{
-					LED1_Half_Preiod = 333;
+					LED1_Half_Preiod = 250;
 				}
-				else if (LED1_Half_Preiod == 333)
+				else if (LED1_Half_Preiod == 250) // 2 Hz
 				{
-					LED1_Half_Preiod = 2000;
+					LED1_Half_Preiod = 167;
+				}
+				else if (LED1_Half_Preiod == 167) // 3 Hz
+				{
+					LED1_Half_Preiod = 1000;
 				}
 		  }
 		  SwitchState[1] = SwitchState[0];

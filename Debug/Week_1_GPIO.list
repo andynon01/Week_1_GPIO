@@ -387,6 +387,7 @@ int main(void)
   MX_USART2_UART_Init();
  80004ea:	f000 f953 	bl	8000794 <MX_USART2_UART_Init>
   /* USER CODE BEGIN 2 */
+
   uint32_t Button_Timestamp = 0;
  80004ee:	2300      	movs	r3, #0
  80004f0:	627b      	str	r3, [r7, #36]	; 0x24
@@ -420,11 +421,11 @@ int main(void)
   uint8_t Change = 0;
  8000512:	2300      	movs	r3, #0
  8000514:	747b      	strb	r3, [r7, #17]
+  {
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 
-	  // Task 1
-	  // Switch_Button
 	  if (HAL_GetTick() - Button_Timestamp >= 100) // Set Sampling Time
  8000516:	f000 fb5d 	bl	8000bd4 <HAL_GetTick>
  800051a:	4602      	mov	r2, r0
